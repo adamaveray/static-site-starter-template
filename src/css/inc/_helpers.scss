@@ -1,0 +1,124 @@
+// Some components based off HTML5 Boilerplate (MIT licence) - https://html5boilerplate.com/
+%hidden {
+    display: none !important;
+}
+
+%visuallyhidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: none;
+    white-space: nowrap;
+}
+
+%visuallyhidden--focusable {
+    &:active,
+    &:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: inherit;
+    }
+}
+
+%invisible {
+    visibility: hidden;
+}
+
+%clearfix {
+    &::before,
+    &::after {
+        content: ' ';
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+%image-replaced {
+    display: block;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+
+    &::before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 150%;
+    }
+}
+
+%image-replaced--alt {
+    color: transparent !important;
+    color: transparent-hack() !important; // sass-lint:disable-line no-duplicate-properties variable-for-property
+    font-size: 1px;
+}
+
+%plain-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+%inline-list {
+    @extend %plain-list;
+    cursor: default;
+
+    &--spaceless {
+        letter-spacing: -0.285em;
+    }
+
+    &--justified {
+        text-align: justify;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            width: 100%;
+            height: 0;
+        }
+    }
+}
+
+%inline-list-item {
+    display: inline-block;
+    letter-spacing: 0;
+    vertical-align: top;
+}
+
+%plain-button {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    appearance: none;
+}
+
+%fit-image {
+    display: block;
+    margin: 0;
+    overflow: hidden;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+
+        @supports (object-fit: cover) {
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "name": "",
+    "private": true,
+    "scripts": {
+        "build": "gulp build",
+        "server": "yarn run browser-sync start -s dist -f dist --browser false",
+        "lint": "yarn run npm-run-all -p lint:*",
+        "lint:tsc": "node node_modules/.bin/tsc -noEmit --pretty",
+        "lint:tslint": "node node_modules/.bin/tslint -c tslint.json -p . --format codeFrame 'src/**/*.js' 'src/**/*.ts'",
+        "lint:jsonlint": "node node_modules/.bin/jsonlint-cli './*.json' 'src/**/*.json'",
+        "lint:sasslint": "node node_modules/.bin/sass-lint -v --format unix --ignore '**/vendor/**/*.scss' 'src/**/*.scss'",
+        "format": "yarn run npm-run-all \"format:tslint 'src/**/*.js'\" \"format:prettier 'src/**/*.js' 'src/**/*.ts' './*.json' '!**/*.min.*'\" \"format:prettier --parser scss 'src/**/*.scss' '!**/*.min.*'\"",
+        "format-file": "node node_modules/.bin/npm-run-all \"format:* {1}\" --",
+        "format:tslint": "node node_modules/.bin/tslint -c tslint.json -p . --fix",
+        "format:prettier": "node node_modules/.bin/prettier --write",
+        "prepare": "yarn run npm-run-all -p prepare:*",
+        "prepare:modclean": "node node_modules/.bin/modclean --run --no-progress --patterns=\"default:safe\"",
+        "prepare:prettier-package": "yarn run format:prettier ./package.json",
+        "precommit": "yarn run npm-run-all -p -r lint:*",
+        "prepush": "yarn run npm-run-all -p -r lint:*"
+    },
+    "config": {
+        "templateVars": {
+            "siteName": "",
+            "analyticsId": ""
+        },
+        "copyFiles": [
+            "robots.txt"
+        ],
+        "autoprefixer": {
+            "browsers": ">0.5%",
+            "cascade": false
+        },
+        "htmlmin": {
+            "collapseWhitespace": true,
+            "conservativeCollapse": true,
+            "removeComments": true
+        },
+        "nunjucks": {
+            "throwOnUndefined": true
+        },
+        "images": {
+            "defaultQuality": 75
+        }
+    },
+    "dependencies": {
+        "events": "^3.0.0",
+        "tslib": "^1.9.3"
+    },
+    "devDependencies": {
+        "@types/events": "^1.2.0",
+        "@types/node": "^10.5.6",
+        "bourbon-neat": "^3.0.0",
+        "browser-sync": "^2.24.6",
+        "browserify": "^16.2.2",
+        "core-decorators": "^0.20.0",
+        "crc-32": "^1.2.0",
+        "del": "^3.0.0",
+        "gulp": "^4.0.0",
+        "gulp-autoprefixer": "^5.0.0",
+        "gulp-buffer": "^0.0.2",
+        "gulp-clean-css": "^3.9.4",
+        "gulp-cli": "^2.0.1",
+        "gulp-data": "^1.3.1",
+        "gulp-environment": "^1.5.2",
+        "gulp-filter": "^5.1.0",
+        "gulp-htmlmin": "^4.0.0",
+        "gulp-if": "^2.0.2",
+        "gulp-imagemin": "^4.1.0",
+        "gulp-nunjucks-render": "^2.2.2",
+        "gulp-rename": "^1.4.0",
+        "gulp-responsive-images": "^0.0.3",
+        "gulp-sass": "^4.0.1",
+        "gulp-sass-vars": "^1.3.0",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-tap": "^1.0.1",
+        "husky": "^0.14.3",
+        "jsonlint-cli": "^1.0.1",
+        "modclean": "^3.0.0-beta.1",
+        "npm-run-all": "^4.1.3",
+        "prettier": "^1.14.0",
+        "sass-lint": "sasstools/sass-lint#6a71e29",
+        "through2": "^2.0.3",
+        "tinyify": "^2.4.3",
+        "tsify": "^4.0.0",
+        "tslint": "^5.11.0",
+        "tslint-config-airbnb": "^5.9.2",
+        "tslint-config-prettier": "^1.14.0",
+        "tslint-eslint-rules": "^5.3.1",
+        "typescript": "^3.0.1"
+    },
+    "cldr-data-urls-filter": "(core|dates|numbers|units)"
+}

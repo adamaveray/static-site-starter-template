@@ -1,0 +1,146 @@
+%character-replaced {
+    position: relative;
+    overflow: hidden;
+    text-indent: 105%;
+    white-space: nowrap;
+
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+        text-indent: 0;
+    }
+}
+
+@mixin character-replaced($character, $width: null, $height: null, $offset: null) {
+    @extend %character-replaced;
+
+    @if $width != null {
+        width: $width;
+    }
+    @if $height != null {
+        height: $height;
+    }
+
+    &::after {
+        content: $character;
+        @if $offset != null {
+            margin-top: $offset;
+        }
+
+        @content;
+    }
+}
+
+@mixin image-replaced(
+    $image-path,
+    $width,
+    $height,
+    $background-color: transparent,
+    $position: 50% 50%,
+    $repeat: no-repeat,
+    $background-width: null,
+    $background-height: null,
+    $inline: false,
+    $fallback-path: null,
+    $alt-method: false
+) {
+    @if $alt-method {
+        @extend %image-replaced--alt;
+    } @else {
+        @extend %image-replaced;
+    }
+
+    $background-width: $width !default;
+    $background-height: $height !default;
+
+    width: $width;
+    height: $height;
+
+    // Regular background
+    $image: null;
+    @if $image-path != null {
+        $image: img($image-path);
+        @if $inline {
+            $image: add-comment-tag('inline', $image);
+        }
+    }
+    background: $background-color $image $position $repeat;
+
+    @content;
+}
+
+@mixin absolutely-centred($width, $height: $width, $top: 50%, $left: 50%) {
+    top: $top;
+    left: $left;
+    width: $width;
+    height: $height;
+    margin-top: -($height / 2);
+    margin-left: -($width / 2);
+}
+
+@mixin triangle($direction, $size, $color, $sizeHeight: $size, $display: block) {
+    // sass-lint:disable property-sort-order
+    $side: null;
+    $perpendicular: null;
+    $opposite: $direction;
+    @if $direction == left {
+        $side: right;
+        $perpendicular: top;
+    } @else if $direction == right {
+        $side: left;
+        $perpendicular: top;
+    } @else if $direction == up {
+        $side: bottom;
+        $perpendicular: left;
+    } @else if $direction == down {
+        $side: top;
+        $perpendicular: left;
+    }
+    display: $display;
+    #{$perpendicular}: 50%;
+    #{$side}: 100%;
+    margin-#{$perpendicular}: -$size;
+    border: solid $size transparent;
+    border-#{$side}-color: $color;
+    border-#{$opposite}: none;
+    @if $size != $sizeHeight {
+        border-#{$side}-width: $sizeHeight;
+    }
+
+    @content;
+}
+
+@mixin pseudo($pseudo, $content: '', $display: block, $inert: false) {
+    $selector: null;
+    @if $pseudo == both {
+        $selector: unquote('&::before, &::after');
+    } @else {
+        $selector: unquote('&:#{$pseudo}');
+    }
+
+    #{$selector} {
+        display: $display;
+        content: $content;
+
+        @if $inert {
+            pointer-events: none;
+        }
+
+        @content;
+    }
+}
+
+@function client-calc($calc) {
+    @return unquote('calc(#{$calc})');
+}
+
+@function sprite-offset($nth, $size, $gap: 1px) {
+    @return -($size + $gap) * $nth;
+}
+
+@function transparent-hack() {
+    @return unquote('rgba(0,0,1,0)');
+}

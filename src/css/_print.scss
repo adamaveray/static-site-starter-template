@@ -1,0 +1,74 @@
+@media print {
+    $print-color-text: #000;
+    $print-color-border: #999;
+
+    * {
+        &,
+        &::before,
+        &::after {
+            background: transparent !important;
+            box-shadow: none !important;
+            color: $print-color-text !important;
+            text-shadow: none !important;
+        }
+    }
+
+    a {
+        &,
+        &:visited {
+            text-decoration: underline;
+        }
+
+        &[href] {
+            &::after {
+                content: ' (' attr(href) ')';
+            }
+        }
+
+        &[title] {
+            &::after {
+                content: ' (' attr(title) ')';
+            }
+        }
+
+        // Don't show links that are fragment identifiers, or use the `javascript:` pseudo protocol
+        &[href^='#'],
+        &[href^='javascript:'] {
+            &::after {
+                content: '';
+            }
+        }
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid $print-color-border;
+        page-break-inside: avoid;
+    }
+
+    // Printing Tables: http://css-discuss.incutio.com/wiki/Printing_Tables
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

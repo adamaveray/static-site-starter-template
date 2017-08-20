@@ -1,0 +1,34 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint-config-airbnb", "tslint-eslint-rules", "tslint-config-prettier"],
+    "jsRules": {},
+    "rules": {
+        "import-name": [false],
+        "variable-name": [true, "ban-keywords"],
+        "object-literal-shorthand": false,
+        "ordered-imports": true,
+        "member-access": [true, "check-accessor", "check-parameter-property"],
+        "member-ordering": [
+            true,
+            {
+                "order": ["static-field", "instance-field", "constructor", "instance-method"]
+            }
+        ],
+        "no-import-side-effect": true,
+        "no-internal-module": true,
+        "no-reference": true,
+        "prefer-for-of": true,
+        "promise-function-async": true,
+        "unified-signatures": true,
+        "await-promise": true,
+        "ban-comma-operator": true,
+        "no-floating-promises": true,
+        "no-inferred-empty-object-type": true,
+        "no-misused-new": true,
+        "no-angle-bracket-type-assertion": true,
+        "no-boolean-literal-compare": true,
+        "match-default-export-name": true,
+        "array-type": [true, "array"],
+        "prefer-readonly": true
+    }
+}
